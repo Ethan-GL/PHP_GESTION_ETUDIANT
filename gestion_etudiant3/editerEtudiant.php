@@ -47,6 +47,6 @@ $row = $rs->fetch( PDO::FETCH_ASSOC );
 
 <?php
 
-$this->$conn = null;
+$conn->null;
 
 ?>

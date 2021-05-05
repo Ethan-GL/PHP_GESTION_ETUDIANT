@@ -7,16 +7,23 @@ $photo_nom = $_FILES['photo']['name'];
 $file_tmp_name = $_FILES['photo']['tmp_name'];
 move_uploaded_file($file_tmp_name, "./images/$photo_nom");
 
-$req = "insert into etudiant(nom,mail,photo) values ('$nom','$mail','$photo_nom')";
+// $req = "insert into etudiant(nom,mail,photo) values ('$nom','$mail','$photo_nom')";
 
-if ($conn->query($req) === TRUE) {
+$stmt = $conn->prepare("INSERT INTO etudiant(nom,mail,photo)
+  VALUES (:nom, :mail, :photo_nom)");
+  $stmt->bindParam(':nom', $nom);
+  $stmt->bindParam(':mail', $mail);
+  $stmt->bindParam(':photo_nom', $photo_nom);
+
+  $stmt->execute();
+
+if ($conn->query($stmt) === TRUE) {
     //echo "New record created successfully";
 } else {
-    echo "Error: " . $req . "<br>" . $conn->error;
+    echo "Error: " . $stmt . "<br>" . $conn->error;
 }
 
-$this->$conn = null;
-
+$conn->null;
 
 ?>
 

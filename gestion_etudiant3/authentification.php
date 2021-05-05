@@ -29,5 +29,3 @@ if($user=$stmt->fetch(PDO::FETCH_ASSOC)) {
 } else {
     header("location:index.php");
 }
-
-
